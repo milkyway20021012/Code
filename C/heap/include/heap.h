@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stdbool.h>
-
+#include <time.h> 
 // 以順序表實現堆
 
 typedef int HeapDatatype;
@@ -16,7 +16,8 @@ typedef struct Heap
 
 // 初始化
 void HeapInit(HP *hp);
-
+// 初始化數組
+void HeapInitArray(HP *php, int *a, int n);
 // 交換
 void Swap(HeapDatatype *x1, HeapDatatype *x2);
 // 向上調整
@@ -33,3 +34,5 @@ HeapDatatype HeapTop(HP *php);
 bool HeapEmpty(HP *php);
 // 堆有效數據的個數
 int HeapSize(HP *php);
+// 堆銷毀
+void HeapDestroy(HP *php);

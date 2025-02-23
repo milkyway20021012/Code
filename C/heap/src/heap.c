@@ -1,6 +1,6 @@
 #include "../include/heap.h"
 
-// 這裡的堆以大根堆來進行演示
+// 這裡的堆以大根堆來進行演示 （0223更動 建小堆）
 
 void Swap(HeapDatatype *x1, HeapDatatype *x2)
 {
@@ -20,7 +20,23 @@ void HeapInit(HP *php)
     php->capacity = 4;
     php->size = 0;
 }
-
+// 初始化數組
+void HeapInitArray(HP *php, int *a, int n)
+{
+    assert(php);
+    php->a = (HeapDatatype *)malloc(sizeof(HeapDatatype) * n);
+    if (php->a == NULL)
+    {
+        perror("malloc fail");
+    }
+    php->capacity = n;
+    php->size = n;
+    // 建堆
+    for (int i = (n - 1 - 1) / 2; i >= 0; --i)
+    {
+        AdjustDown(php->a,php->size,i);
+    }
+}
 // 建堆 （插入）（向上調整）
 
 void AdjustUp(HeapDatatype *a, int child)
@@ -50,11 +66,12 @@ void AdjustDown(HeapDatatype *a, int n, int parent) // n是數組中有效數據
     while (child < n)
     {
         // 先選出左右孩子哪個比較大
-        if (child + 1 < n && a[child] < a[child + 1])
+        // 因爲在建小堆,所以是找比較小的那個
+        if (child + 1 < n && a[child+1] < a[child])
         {
             ++child;
         }
-        if (a[parent] < a[child])
+        if (a[child] < a[parent])
         {
             Swap(&a[parent], &a[child]);
             parent = child;
@@ -111,3 +128,12 @@ int HeapSize(HP *php)
     assert(php);
     return php->size;
 }
+
+void HeapDestroy(HP *php)
+{
+    assert(php);
+    free(php->a);
+    php->a = NULL;
+    php->capacity = php->size = 0;
+}
+
