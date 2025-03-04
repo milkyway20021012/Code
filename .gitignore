@@ -416,3 +416,6 @@ FodyWeavers.xsd
 #.exe
 
 *.exe
+
+# .program
+Program

@@ -15,7 +15,7 @@ typedef struct Heap
 } HP;
 
 // 初始化
-void HeapInit(HP *hp);
+void HeapInit(HP *php);
 // 初始化數組
 void HeapInitArray(HP *php, int *a, int n);
 // 交換

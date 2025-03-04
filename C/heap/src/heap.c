@@ -57,7 +57,7 @@ void AdjustUp(HeapDatatype *a, int child)
     }
 }
 
-// 堆的刪除 （將根節點與葉子進行交換再向下調整）
+// 堆的刪除（將根節點與葉子進行交換再向下調整）
 // 向下調整的前提是子樹必須要是大根堆或小根堆
 
 void AdjustDown(HeapDatatype *a, int n, int parent) // n是數組中有效數據的個數

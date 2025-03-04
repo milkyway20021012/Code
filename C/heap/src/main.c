@@ -119,9 +119,17 @@ void CreateNData()
 //     return 0;
 // }
 
-int main()
-{
-    // CreateNData();
-    PrintTopk("data.txt", 10);
+// int main()
+// {
+//     // CreateNData();
+//     PrintTopk("data.txt", 10);
+//     return 0;
+// }
+
+int main(){
+    int array[] = {27,15,19,18,28,34,65,49,25,37};
+    
+
+
     return 0;
 }
