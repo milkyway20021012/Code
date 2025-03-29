@@ -1,0 +1,6 @@
+student             average   grade     
+Hellen              89.60     pass      
+Amy                 76.00     pass      
+Jack                43.15     fail      
+Gordon              73.60     pass      
+Brian               40.65     fail      
