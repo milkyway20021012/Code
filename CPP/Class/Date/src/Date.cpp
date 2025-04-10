@@ -11,7 +11,7 @@ Date::Date(int year, int month, int day)
         cout << "非法日期" << endl;
     }
 }
-void Date::Print() const
+const void Date::Print() const
 {
     cout << _year << "年" << _month << "月" << _day << "日" << endl;
 }

@@ -2,17 +2,19 @@
 #include <array>
 using namespace std;
 
+int main()
+{
+    array<int, 13> Month_day = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-int main() {
-    array<int, 13> Month_day = {0,31,28,31,30,31,30,31,31,30,31,30,31};
-
-    int _year,_month,_day;
+    int _year, _month, _day;
     cin >> _year >> _month >> _day;
 
-    if((_year % 4 == 0 && _year % 100 != 0) || (_year % 400 == 0)){
+    if ((_year % 4 == 0 && _year % 100 != 0) || (_year % 400 == 0))
+    {
         Month_day[2] = 29;
     }
-    else{
+    else
+    {
         Month_day[2] = 28;
     }
 
@@ -20,18 +22,19 @@ int main() {
 
     int sum = 0;
 
-    while((month != _month) || (day != _day)){
-        if(month != _month){
+    while ((month != _month) || (day != _day))
+    {
+        if (month != _month)
+        {
             sum += Month_day[month];
             ++month;
         }
-        else{
+        else
+        {
             sum += 1;
             ++day;
         }
     }
 
     cout << sum << endl;
-
-
 }
