@@ -17,6 +17,7 @@ void print_array(int *p, int n)
     {
         printf("%d,", *(p + i));
     }
+    free(p);
 }
 int main()
 {
