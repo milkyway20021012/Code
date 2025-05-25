@@ -1,0 +1,6 @@
+Hellen 90 89.2
+Amy 100 52
+Jack 22.3 64
+Gordon 47.2 100
+Brian 56 25.3
+

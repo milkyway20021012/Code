@@ -1,0 +1,14 @@
+
+课件：https://drive.weixin.qq.com/s?k=ADsA_gcwAA4HFreN5a
+
+C++方向相关软件：https://drive.weixin.qq.com/s?k=ADsA_gcwAA4PjWYpq2
+
+代码、板书见老师的码云链接，具体如下：
+
+鹏哥码云链接：https://gitee.com/bitpg/class108
+杭哥码云链接：https://gitee.com/bithange/108-issues
+蛋哥码云链接：https://gitee.com/whb-helloworld/108
+吴毅波老师码云链接：https://gitee.com/wu-xiaozhe
+QT精品课板书、课件、代码、安装环境：https://gitee.com/HGtz2222/qt-class
+docker精品课课件、板书：https://gitee.com/houyunjiang/docker
+Redis初阶+进阶板书代码：https://gitee.com/HGtz2222/classroom_code/tree/master/redis-code

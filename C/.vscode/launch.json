@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug main.c",
+            "type": "lldb",  
+            "request": "launch",
+            "program": "${workspaceFolder}/program",
+            "args": [],
+            "stopOnEntry": false,
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "preLaunchTask": "Build Program"
+        }
+    ]
+}

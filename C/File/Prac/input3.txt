@@ -1,0 +1,8 @@
+Overwatch is a multiplayer team-based first-person shooter developed and published by Blizzard Entertainment.
+In a time of global crisis, an international task force of heroes banded together to restore peace to a war-torn world.
+This organization, known as Overwatch, ended the crisis and helped maintain peace for a generation, 
+inspiring an era of exploration, innovation, and discovery. After many years, Overwatch's influence waned and it was eventually disbanded.
+Now in the wake of its dismantling, conflict is rising once again. Overwatch may be gone... but the world still needs heroes.
+Choose A Hero: Overwatch features a wide array of unique Heroes, ranging from a time-jumping adventurer, to an armored,
+rocket-hammer-wielding warrior, to a transcendent robot monk. Every hero plays differently,
+and mastering their Abilities is the key to unlocking their potential.No two heroes are the same.
