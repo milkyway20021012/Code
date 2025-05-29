@@ -33,7 +33,6 @@ void test01()
         cout << e;
     }
 }
-
 void test02()
 {
     vector<int> v(10, 0); // 开一个数组 初始化成0
@@ -50,7 +49,6 @@ void test02()
     }
     cout << endl;
 }
-
 void test03()
 {
     vector<int> v;
@@ -103,7 +101,6 @@ void test04()
     }
     cout << endl;
 }
-
 void test05()
 {
     int a[] = {25, 3, 7, 5, 4, 3, 6, 4, 3, 3, 3, 1, 2, 4};
