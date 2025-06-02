@@ -1,42 +1,53 @@
 #include <iostream>
+#include <string>
+#include <vector>
 using namespace std;
 
 class Decoder
 {
+
 public:
-    Decoder(string s) : str(s) {}
-    string get_decode()
+    Decoder(string str) : _str(str)
     {
-        string ret;
-        string now_alphbet;
+    }
+    vector<string> get_decode()
+    {
+        vector<string> ret;
         int count = 0;
-        for (int i = 0; i < str.size(); ++i)
+        string now_str = "";
+        for (size_t i = 0; i < _str.size(); ++i)
         {
-            count = 0;
-            if (str[i] >= '1' && str[i] <= '9')
+            if (isalpha(_str[i]))
             {
-                count = str[i] - '0';
-                for (int j = 0; j < count; ++j)
-                {
-                    ret += now_alphbet; // 將now_alphbet（其實應該要說是當前字串）插入到結果的後面
-                }
-                now_alphbet = "";
+                now_str += _str[i];
             }
-            else
+            else if (isdigit(_str[i]))
             {
-                now_alphbet += str[i];
+                count = _str[i] - '0';
+                for (int i = 1; i <= count; ++i)
+                {
+                    ret.push_back(now_str);
+                }
+                now_str = "";
             }
         }
         return ret;
     }
 
 private:
-    string str;
+    string _str;
 };
-
+ostream &operator<<(ostream &os, const vector<string> &vec)
+{
+    for (const auto &s : vec)
+    {
+        os << s;
+    }
+    return os;
+}
 int main()
 {
-    Decoder d("A3BB2CCC2");
+    Decoder d("A3BB2CCC3");
     cout << d.get_decode();
 
     return 0;

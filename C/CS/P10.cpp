@@ -1,56 +1,43 @@
 #include <iostream>
 #include <string>
 using namespace std;
-
 class Bin2Decimal
 {
 public:
-    Bin2Decimal(string str) : Bin(str) {}
-
-    // 因爲這題老師給的輸出結果有兩種模式，所以我採用函數重載
-    string to_decimal()
+    Bin2Decimal(string str) : _str(str)
     {
-        string ret; // 用來返回輸出（但不確定是否一定要）
-        ret += Bin;
-        ret += " -> ";
-        int num = stoi(Bin);
-        int i = 1;
-        int Decimal = 0; // 用來計算得到的結果
-        while (num)
+    }
+    int to_decimal()
+    {
+        int len = _str.size();
+        int num = stoi(_str);
+        int ret = 0;
+        int times = 1;
+        for (int i = 1; i <= len; ++i)
         {
-            int last_num = num % 10;
-            Decimal += (last_num * i);
-            i *= 2;
+            ret += (num % 10) * times;
+            times *= 2;
             num /= 10;
         }
-        string ret_to_string = to_string(Decimal);
-        ret += ret_to_string;
         return ret;
     }
-    string to_decimal(string str)
+    int to_decimal(string str)
     {
-        Bin = str;
-        string ret;
-        ret += Bin;
-        ret += " -> ";
-        int num = stoi(Bin);
-        int i = 1;
-        int Decimal = 0;
-        while (num)
+        int len = str.size();
+        int num = stoi(str);
+        int ret = 0;
+        int times = 1;
+        for (int i = 1; i <= len; ++i)
         {
-
-            int last_num = num % 10;
-            Decimal += (last_num * i);
-            i *= 2;
+            ret += (num % 10) * times;
+            times *= 2;
             num /= 10;
         }
-        string ret_to_string = to_string(Decimal);
-        ret += ret_to_string;
         return ret;
     }
 
 private:
-    string Bin;
+    string _str;
 };
 int main()
 {
