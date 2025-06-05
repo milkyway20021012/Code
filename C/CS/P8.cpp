@@ -11,7 +11,7 @@ int rec_Fibonacci(int n)
 }
 int main()
 {
-    int n = 10;
+    int n = 25;
     int sum = rec_Fibonacci(n);
     printf("Fibonacci(%d) = %d", n, sum);
     return 0;

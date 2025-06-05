@@ -1,15 +1,16 @@
 #include <iostream>
 using namespace std;
 // *
+// using pointer and recursion
 int my_strlen(char *s)
 {
-    int count = 0;
-    while (*s)
+    static int count = 0;
+    if (*s == '\0')
     {
-        count++;
-        s++;
+        return count;
     }
-    return count;
+    ++count;
+    return my_strlen(++s);
 }
 int main()
 {

@@ -24,7 +24,7 @@ public:
         rewind(fp);
         while (fgets(buf, sizeof(buf), fp) != NULL)
         {
-            if (strstr(buf, "class ") == buf) // 這裡的buf 是 buf的起始位置
+            if (strstr(buf, "class ") == buf) // 這裡的buf是buf的起始位置 => 為了確保class是在該字串的開頭
             {
                 cout << buf;
             }

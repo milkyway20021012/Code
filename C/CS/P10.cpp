@@ -37,6 +37,6 @@ int main()
 {
     Bin2Decimal d("1000");
     cout << d.to_decimal() << endl;
-    cout << d.to_decimal("1111") << endl;
+    cout << d.to_decimal("1010") << endl;
     return 0;
 }

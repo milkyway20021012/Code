@@ -22,7 +22,7 @@ protected:
 class CGUClock : public Clock
 {
 public:
-    CGUClock(int h, int m, int s, string str) : Clock(h, m, s, str) {}
+    CGUClock(int h, int m, int s, string str) : Clock(h, m, s, str) {} // 繼承的類如果要使用被繼承的類的成員 要用被繼承的類的構造函數
     void display()
     {
         if (_str == "PM")
