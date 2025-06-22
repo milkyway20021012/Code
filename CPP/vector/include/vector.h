@@ -2,6 +2,7 @@
 #include <iostream>
 #include <assert.h>
 using namespace std;
+// vector 底層邏輯 => 順序表
 namespace bit
 {
     template <class T>
@@ -27,12 +28,58 @@ namespace bit
         {
             return _finish;
         }
-
+        // 迭代器初始化
+        // [first,last)
+        template <class InputIterator>
+        vector(InputIterator first, InputIterator last)
+        {
+            while (first != last)
+            {
+                push_back(*first);
+                first++;
+            }
+        }
+        // n 個 val 初始化
+        vector(size_t n, T &val = T()) : _start(nullptr),
+                                         _finish(nullptr),
+                                         _end_of_storage(nullptr)
+        {
+            resize(n, val);
+        }
         vector() : _start(nullptr),
                    _finish(nullptr),
                    _end_of_storage(nullptr)
         {
         }
+        // 深拷貝
+        vector(const vector<T> &v) : _start(nullptr),
+                                     _finish(nullptr),
+                                     _end_of_storage(nullptr)
+        {
+            _start = new T[v.capacity()];
+            // memcpy(_start, v._start, sizeof(T) * v.size());
+            for (size_t i = 0; i < v.size(); ++i)
+            {
+                _start[i] = v._start[i];
+            }
+            _finish = _start + v.size();
+            _end_of_storage = _start + v.capacity();
+        }
+
+        void swap(vector<T> &v)
+        {
+            std::swap(_start, v._start);
+            std::swap(_finish, v._finish);
+            std::swap(_end_of_storage, v._end_of_storage);
+        }
+        // 賦值
+        // v1 = v2
+        vector<T> &operator=(vector<T> v)
+        {
+            swap(v);
+            return *this;
+        }
+
         ~vector()
         {
             if (_start)
@@ -56,6 +103,10 @@ namespace bit
 
             insert(end(), x);
         }
+        void pop_back()
+        {
+            erase(--end());
+        }
         void reserve(size_t n)
         {
             if (n > capacity()) // n 如果大於有效空間 就要擴容
@@ -64,7 +115,12 @@ namespace bit
                 T *tmp = new T[n];
                 if (_start)
                 {
-                    memcpy(tmp, _start, sizeof(T) * sz);
+                    // memcpy(tmp, _start, sizeof(T) * sz); // memcpy 自定義類型會有問題
+                    // 調用深拷貝
+                    for (size_t i = 0; i < sz; ++i)
+                    {
+                        tmp[i] = _start[i];
+                    }
                     delete[] _start;
                 }
                 _start = tmp;
@@ -72,12 +128,28 @@ namespace bit
                 _end_of_storage = _start + n;
             }
         }
+        void resize(size_t n, T &val = T())
+        {
+            if (n < size())
+            {
+                _finish = size() + 1;
+            }
+            else
+            {
+                reserve(n);
+                while (_finish != _start + n)
+                {
+                    *_finish = val;
+                    ++_finish;
+                }
+            }
+        }
 
-        size_t capacity()
+        size_t capacity() const
         {
             return _end_of_storage - _start;
         }
-        size_t size()
+        size_t size() const
         {
             return _finish - _start;
         }
@@ -111,8 +183,17 @@ namespace bit
             ++_finish;
             return pos;
         }
-        void erase()
+        iterator erase(iterator pos)
         {
+            assert(pos >= _start && pos <= _finish);
+            iterator it = pos + 1;
+            while (it != _finish)
+            {
+                *(it - 1) = *it;
+                ++it;
+            }
+            --_finish;
+            return pos;
         }
 
     private:
@@ -155,17 +236,97 @@ namespace bit
         v.push_back(1);
         v.push_back(2);
         v.push_back(3);
-        v.push_back(3);
-        v.push_back(3);
-        v.push_back(3);
-        v.push_back(3);
+        v.push_back(4);
+        v.push_back(5);
+        v.push_back(6);
+        v.push_back(6);
 
-        vector<int>::iterator pos = v.begin() + 3;
-        v.insert(pos, 100);
+        // vector<int>::iterator pos = v.begin() + 3;
+        // v.insert(pos, 100);
+        // print(v);
+        // // insert後迭代器可能會失效 (因爲擴容)
+        // // insert後就不要使用此形參迭代器(如下) => 高危行為
+        // *pos += 10;
+        // print(v);
+
+        // v.erase(v.begin());
+        // print(v);
+
+        auto it = v.begin();
+        while (it != v.end())
+        {
+            if (*it % 2 == 0)
+            {
+                it = v.erase(it);
+            }
+            else
+            {
+                it++;
+            }
+        }
         print(v);
-        // insert後迭代器可能會失效 (因爲擴容)
-        // insert後就不要使用此形參迭代器(如下) => 高危行為
-        *pos += 10;
-        print(v);
+    }
+    void test03()
+    {
+        vector<int> v;
+        v.push_back(1);
+        v.push_back(2);
+        v.push_back(3);
+        v.push_back(4);
+        v.push_back(5);
+
+        for (auto e : v)
+        {
+            cout << e << " ";
+        }
+        cout << endl;
+
+        vector<int> v1(v);
+
+        for (auto e : v1)
+        {
+            cout << e << " ";
+        }
+        cout << endl;
+    }
+    void test04()
+    {
+        vector<int> v;
+        v.push_back(1);
+        v.push_back(2);
+        v.push_back(3);
+        v.push_back(4);
+        v.push_back(5);
+        for (auto e : v)
+        {
+            cout << e << " ";
+        }
+        cout << endl;
+        vector<int> v1;
+        v1 = v;
+        for (auto e : v1)
+        {
+            cout << e << " ";
+        }
+        cout << endl;
+    }
+    void test05()
+    {
+        vector<string> v;
+        v.push_back("11111");
+        v.push_back("22222");
+        v.push_back("33333");
+        v.push_back("44444");
+        v.push_back("55555");
+        v.push_back("55555");
+        v.push_back("55555");
+        v.push_back("55555");
+        v.push_back("55555");
+
+        for (auto &e : v)
+        {
+            cout << e << " ";
+        }
+        cout << endl;
     }
 }

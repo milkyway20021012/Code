@@ -1,8 +1,7 @@
 #include <iostream>
 #include <string>
 using namespace std;
-// *
-class myString
+class my_string
 {
 };
 
@@ -11,20 +10,21 @@ class ReadClass
 public:
     void showClass()
     {
-        FILE *fp = fopen("P3.cpp", "r");
+        FILE *fp = fopen("/Users/milkyway1012/Desktop/Code/C/CS/P3.cpp", "r");
         char buf[256];
+        int count = 0;
         while (fgets(buf, sizeof(buf), fp) != NULL)
         {
             if (strstr(buf, "class") == buf)
             {
-                ++count;
+                count++;
             }
         }
         cout << count << " class in main.cpp" << endl;
         rewind(fp);
         while (fgets(buf, sizeof(buf), fp) != NULL)
         {
-            if (strstr(buf, "class ") == buf) // 這裡的buf是buf的起始位置 => 為了確保class是在該字串的開頭
+            if (strstr(buf, "class") == buf)
             {
                 cout << buf;
             }
@@ -32,11 +32,7 @@ public:
         fclose(fp);
         fp = nullptr;
     }
-
-private:
-    static int count;
 };
-int ReadClass::count = 0;
 int main()
 {
     ReadClass rfile;
