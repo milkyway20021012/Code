@@ -22,11 +22,11 @@ namespace bit
         // iterator
         iterator begin()
         {
-            return _str;
+            return _str; // 返回首元素的地址
         }
         iterator end()
         {
-            return _str + _size;
+            return _str + _size; // 返回首元素的地址 + 有多少個元素
         }
         // const_iterator
         const_iterator begin() const
