@@ -145,3 +145,14 @@ Ex: template <class T>
 //     cout << ret;
 //     return 0;
 // }
+
+int main()
+{
+    string s1("ab");
+    string s2("ab");
+
+    cout << (s1 == s2) << endl;
+    cout << &s1 << endl;
+    cout << &s2 << endl;
+    return 0;
+}

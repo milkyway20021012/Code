@@ -14,7 +14,7 @@ namespace bit
         typedef char *iterator;
         typedef const char *const_iterator;
 
-        // string() : _size(0), _capacity(0), _str(new char[1])
+        // string() : _size(0), _capacity(0), _str(new char[1]) // 至少要開闢一個 '/0' 的空間
         // { // 無參
         //     _str[0] = '\0';
         // }
@@ -28,6 +28,7 @@ namespace bit
         {
             return _str + _size; // 返回首元素的地址 + 有多少個元素
         }
+
         // const_iterator
         const_iterator begin() const
         {
@@ -37,6 +38,7 @@ namespace bit
         {
             return _str + _size;
         }
+
         string(const char *str = "") // 带参
         {
             _size = strlen(str);
@@ -44,6 +46,9 @@ namespace bit
             _str = new char[_capacity + 1];
             // strcpy(_str, str);
             memcpy(_str, str, _size + 1);
+            /*
+            之所以使用memcpy而不是strcpy是因爲strcpy只會複製'/0'之前的的字符 如果字符串是一個沒有'/0'的字符串則會有越界的問題
+            */
         }
 
         // 如果是hello\0world 現代寫法依然會有問題
@@ -56,13 +61,14 @@ namespace bit
         //     string tmp(s._str);
         //     swap(tmp);
         // }
-        
+
         ~string()
         {
             delete[] _str;
             _str = nullptr;
             _size = _capacity = 0;
         }
+
         char *c_str() const // C的string
         {
             return _str;
