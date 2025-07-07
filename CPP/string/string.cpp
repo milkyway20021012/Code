@@ -154,5 +154,16 @@ int main()
     cout << (s1 == s2) << endl;
     cout << &s1 << endl;
     cout << &s2 << endl;
+    int value = 1024;
+    char condition = *((char *)(&value));
+    if (condition)
+        value += 1;
+    condition = *((char *)(&value));
+    if (condition)
+        value += 1;
+    condition = *((char *)(&value));
+
+    cout << value << endl;
+    cout << condition << endl;
     return 0;
 }
