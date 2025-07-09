@@ -238,33 +238,69 @@ using namespace std;
 //     return 0;
 // }
 
+// class Person
+// {
+// public:
+//     string _name;
+// };
+// // 使用虚继承Person类
+// class Student : virtual public Person
+// {
+// protected:
+//     int _num; // 学号
+// };
+// // 使用虚继承Person类
+// class Teacher : virtual public Person
+// {
+// protected:
+//     int _id; // 职工编号
+// };
+// // 教授助理
+// class Assistant : public Student, public Teacher
+// {
+// protected:
+//     string _majorCourse; // 主修课程
+// };
+// int main()
+// {
+//     // 使用虚继承，可以解决数据冗余和二义性
+//     Assistant a;
+//     a._name = "peter";
+//     return 0;
+// }
+
 class Person
 {
 public:
-    string _name;
-};
-// 使用虚继承Person类
-class Student : virtual public Person
-{
+    Person()
+    {
+        cout << "Person默認構造函數調用" << endl;
+    }
+
+    Person(string name) : _name(name)
+    {
+        cout << "Person 初始化列表調用" << endl;
+    }
+
 protected:
-    int _num; // 学号
+    string _name = "Peter";
 };
-// 使用虚继承Person类
-class Teacher : virtual public Person
+
+class Student : public Person
 {
-protected:
-    int _id; // 职工编号
+public:
+    Student(int num, string name) : s_id(num), Person(name)
+    {
+        cout << s_id << endl;
+        cout << _name << endl;
+    }
+
+private:
+    int s_id;
 };
-// 教授助理
-class Assistant : public Student, public Teacher
-{
-protected:
-    string _majorCourse; // 主修课程
-};
+
 int main()
 {
-    // 使用虚继承，可以解决数据冗余和二义性
-    Assistant a;
-    a._name = "peter";
+    Student stu(10, "Jame");
     return 0;
 }
