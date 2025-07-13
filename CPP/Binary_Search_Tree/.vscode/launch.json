@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "執行並除錯 app",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/target/app",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb", // macOS 一般用 lldb
+            "preLaunchTask": "C/C++: clang++ 建置使用中檔案"
+        }
+    ]
+}

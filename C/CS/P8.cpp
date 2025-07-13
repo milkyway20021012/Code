@@ -1,18 +1,33 @@
 #include <iostream>
 using namespace std;
-// *
-int rec_Fibonacci(int n)
-{
-    if (n == 0)
+bool isHappy(int n)
+{   
+    int cnt = 0;
+    int val = 0;
+    string str = to_string(n);
+    while (val != 1)
     {
-        return 0; // 要記得寫結束條件
+        val = 0;
+        for (auto e : str)
+        {
+            int num = e - '0';
+            val += pow(num, 2);
+        }
+        str = to_string(val);
+        ++cnt;
+        if(cnt >= 10000){
+            break;
+        }
     }
-    return n + rec_Fibonacci(n - 1);
+    if(val == 1){
+        return true;
+    }
+    return false;
+    
 }
+
 int main()
 {
-    int n = 25;
-    int sum = rec_Fibonacci(n);
-    printf("Fibonacci(%d) = %d", n, sum);
+    cout << isHappy(19);
     return 0;
 }
