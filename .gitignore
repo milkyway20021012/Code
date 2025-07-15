@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+# 忽略 VSCode 設定檔（位於 .vscode 資料夾中的 .json 檔）
+.vscode/*.json
+
+# 忽略 target 資料夾及其所有內容（通常為編譯後產物）
+target/

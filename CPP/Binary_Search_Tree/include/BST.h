@@ -1,187 +1,177 @@
 #pragma once
 #include <iostream>
 using namespace std;
-namespace BSTree
+
+namespace BST
 {
-    template <class key>
+    template <class K>
     struct BSTNode
     {
-        BSTNode<key> *_left;  // left-child
-        BSTNode<key> *_right; // right-child
-        key _key;             // value
-
-        BSTNode(const key &val) : _left(nullptr), _right(nullptr), _key(val)
-        {
-        }
+        BSTNode(const K &value) : _left(nullptr), _right(nullptr), _val(value) {}
+        BSTNode<K> *_left;
+        BSTNode<K> *_right;
+        K _val;
     };
 
-    template <class key>
+    template <class K>
     class BST
     {
-    public:
-        typedef BSTNode<key> Node;
+        typedef BSTNode<K> *Node;
 
-        BST() = default;
-        // 拷貝構造函數 => 深拷貝
-        BST(const BST<key> &bst)
-        {
-            _root = Copy(bst._root);
-        }
-        BST<key> &operator=(BST<key> target)
-        {
-            std::swap(_root, target._root);
-            return *this;
-        }
-        // 析構
-        ~BST()
-        {
-            Destroy(_root);
-            _root = nullptr;
-        }
-        // 我們實現的是值不重複的 所以定義成bool
-        bool insert(const key &val)
+    public:
+        BST() : _root(nullptr) {}
+
+        // 插入節點（不允許重複）
+        bool insert(const K &value)
         {
             if (_root == nullptr)
             {
-                _root = new Node(val);
+                _root = new BSTNode<K>(value);
                 return true;
             }
-            // 如果不是為空 我們要先找要插入的位置
-            Node *parent = nullptr;
-            Node *cur = _root;
 
+            Node parent = nullptr;
+            Node cur = _root;
             while (cur)
             {
-                if (cur->_key < val)
+                if (cur->_val < value)
                 {
                     parent = cur;
                     cur = cur->_right;
                 }
-                else if (cur->_key > val)
+                else if (cur->_val > value)
                 {
-                    parent = cur; // 先記錄下來cur的位置(因爲cur是局部變量，我們不能直接把它插入到樹中)
+                    parent = cur;
                     cur = cur->_left;
                 }
                 else
                 {
-                    return false;
+                    return false; // 已存在
                 }
             }
-            // 到這裡我們已經找到了葉子的位置(nullptr) 然後我們去建立一個新節點(因爲前面parent 和 cur 都是局部變量，我們不能直接插入)
-            cur = new Node(val);
-            if (parent->_key < val)
+
+            // cur 是 nullptr，此時 parent 是插入點的父節點
+            Node newNode = new BSTNode<K>(value);
+            if (value < parent->_val)
             {
-                parent->_right = cur;
+                parent->_left = newNode;
             }
             else
             {
-                parent->_left = cur;
+                parent->_right = newNode;
             }
+
             return true;
         }
-        bool Find(const key &val)
+
+        // 查找
+        bool find(const K &value)
         {
-            Node *cur = _root;
+            Node cur = _root;
             while (cur)
             {
-                if (cur->_key < val)
+                if (cur->_val < value)
                 {
                     cur = cur->_right;
                 }
-                else if (cur->_key > val)
+                else if (cur->_val > value)
                 {
                     cur = cur->_left;
                 }
                 else
                 {
+                    cout << value << " 存在" << endl;
                     return true;
                 }
             }
+            cout << value << " 不存在" << endl;
             return false;
         }
 
-        bool erase(const key &val)
+        // 刪除節點
+        bool erase(const K &val)
         {
+            if (_root == nullptr)
+            {
+                return false;
+            }
 
-            Node *parent = nullptr;
-            Node *cur = _root;
+            Node parent = nullptr;
+            Node cur = _root;
 
             while (cur)
             {
-                if (cur->_key < val)
+                if (cur->_val < val)
                 {
                     parent = cur;
                     cur = cur->_right;
                 }
-                else if (cur->_key > val)
+                else if (cur->_val > val)
                 {
                     parent = cur;
                     cur = cur->_left;
                 }
-                else // cur->_key == val
+                else
                 {
-                    // 刪除目標
+                    // case 1: 無左子
                     if (cur->_left == nullptr)
                     {
                         if (parent == nullptr)
-                        { // 父節點為空 => root
+                        {
                             _root = cur->_right;
+                        }
+                        else if (parent->_left == cur)
+                        {
+                            parent->_left = cur->_right;
                         }
                         else
                         {
-                            if (parent->_left == cur)
-                            {
-                                parent->_left = cur->_right;
-                            }
-                            else
-                            {
-                                parent->_right = cur->_right;
-                            }
+                            parent->_right = cur->_right;
                         }
                         delete cur;
                         return true;
                     }
+                    // case 2: 無右子
                     else if (cur->_right == nullptr)
                     {
                         if (parent == nullptr)
                         {
                             _root = cur->_left;
                         }
+                        else if (parent->_left == cur)
+                        {
+                            parent->_left = cur->_left;
+                        }
                         else
                         {
-                            if (parent->_left == cur)
-                            {
-                                parent->_left = cur->_left;
-                            }
-                            else
-                            {
-                                parent->_right = cur->_left;
-                            }
+                            parent->_right = cur->_left;
                         }
                         delete cur;
                         return true;
                     }
+                    // case 3: 有左右子
                     else
                     {
-                        // 有兩個孩子的情況 => 可以選擇左子樹最大的值或右子樹最小的值 ( 為了滿足BST 左小右大的性質 )
-                        Node *RightMinP = cur;        // 當前最小的 val 的父節點
-                        Node *RightMin = cur->_right; // 找右子樹最小的 val
+                        Node RightMinP = cur;
+                        Node RightMin = cur->_right;
                         while (RightMin->_left)
-                        { // 右子樹最小的肯定是在 cur->_right 這個節點的左子樹中
+                        {
                             RightMinP = RightMin;
                             RightMin = RightMin->_left;
                         }
-                        cur->_key = RightMin->_key; // 將最小的值給 cur (要刪除的位置) => 交換法
 
-                        if (RightMinP->_left == RightMin) // 判斷RightMin 是RightMinP的左子還是右子
+                        cur->_val = RightMin->_val;
+
+                        if (RightMinP->_left == RightMin)
                         {
-                            RightMinP->_left = RightMin->_left;
+                            RightMinP->_left = RightMin->_right;
                         }
                         else
                         {
                             RightMinP->_right = RightMin->_right;
                         }
-                        delete RightMin; // 刪除節點
+
+                        delete RightMin;
                         return true;
                     }
                 }
@@ -197,119 +187,112 @@ namespace BSTree
         }
 
     private:
-        void _InOrder(Node *root)
+        void _InOrder(Node root)
         {
             if (root == nullptr)
-            {
                 return;
-            }
+
             _InOrder(root->_left);
-            cout << root->_key << " ";
+            cout << root->_val << " ";
             _InOrder(root->_right);
-        }
-        void Destroy(Node *root)
-        {
-            if (root == nullptr)
-            {
-                return;
-            }
-            Destroy(root->_left);
-            Destroy(root->_right);
-            delete root;
-        }
-        Node *Copy(Node *root)
-        {
-            if (root == nullptr)
-            {
-                return nullptr;
-            }
-            Node *Newroot = new Node(root->_key);
-
-            Newroot->_left = Copy(root->_left);
-            Newroot->_right = Copy(root->_right);
-
-            return Newroot;
         }
 
     private:
-        Node *_root = nullptr;
+        Node _root;
     };
 }
 
 namespace BST_K_V
 {
-    template <class key, class value>
+    template <class K, class V>
     struct BSTNode
     {
-        BSTNode<key, value> *_left;  // left-child
-        BSTNode<key, value> *_right; // right-child
-        key _key;                    // value
-        value _value;
-        BSTNode(const key &k, const value &v) : _left(nullptr), _right(nullptr), _key(k), _value(v)
-        {
-        }
+        BSTNode(const K &key, const V &val)
+            : _left(nullptr), _right(nullptr), _key(key), _val(val) {}
+
+        BSTNode<K, V> *_left;
+        BSTNode<K, V> *_right;
+        K _key;
+        V _val;
     };
 
-    template <class key, class value>
+    template <class K, class V>
     class BST
     {
-    public:
-        typedef BSTNode<key, value> Node;
+        typedef BSTNode<K, V> Node;
 
-        // 我們實現的是值不重複的 所以定義成bool
-        bool insert(const key &k, const value &v)
+    public:
+        // 0. 构造
+        BST() : _root(nullptr) {}
+
+        // 1. 拷貝构造
+        BST(const BST<K, V> &bst)
+        {
+            _root = Copy(bst._root);
+        }
+
+        // 2. 賦值
+        BST<K, V> &operator=(BST<K, V> target)
+        {
+            std::swap(_root, target._root);
+            return *this;
+        }
+
+        // 3. 析构
+        ~BST()
+        {
+            Destroy(_root);
+            _root = nullptr;
+        }
+
+        // 插入（不允許重複 key）
+        bool insert(const K &key, const V &val)
         {
             if (_root == nullptr)
             {
-                _root = new Node(k, v);
+                _root = new Node(key, val);
                 return true;
             }
-            // 如果不是為空 我們要先找要插入的位置
+
             Node *parent = nullptr;
             Node *cur = _root;
-
             while (cur)
             {
-                if (cur->_key < k)
+                if (key < cur->_key)
+                {
+                    parent = cur;
+                    cur = cur->_left;
+                }
+                else if (key > cur->_key)
                 {
                     parent = cur;
                     cur = cur->_right;
                 }
-                else if (cur->_key > k)
-                {
-                    parent = cur; // 先記錄下來cur的位置(因爲cur是局部變量，我們不能直接把它插入到樹中)
-                    cur = cur->_left;
-                }
                 else
                 {
-                    return false;
+                    return false; // 重複 key
                 }
             }
-            // 到這裡我們已經找到了葉子的位置(nullptr) 然後我們去建立一個新節點(因爲前面parent 和 cur 都是局部變量，我們不能直接插入)
-            cur = new Node(k, v);
-            if (parent->_key < k)
-            {
-                parent->_right = cur;
-            }
+
+            Node *newNode = new Node(key, val);
+            if (key < parent->_key)
+                parent->_left = newNode;
             else
-            {
-                parent->_left = cur;
-            }
+                parent->_right = newNode;
+
             return true;
         }
-        Node *Find(const key &val)
+
+        // 查找（根據 key）
+        Node *find(const K &key)
         {
             Node *cur = _root;
             while (cur)
             {
-                if (cur->_key < val)
-                {
-                    cur = cur->_right;
-                }
-                else if (cur->_key > val)
-                {
+                if (key < cur->_key)
                     cur = cur->_left;
-                }
+                else if (key > cur->_key)
+                    cur = cur->_right;
                 else
                 {
                     return cur;
@@ -318,94 +301,81 @@ namespace BST_K_V
             return nullptr;
         }
 
-        bool erase(const key &val)
+        // 刪除（根據 key）
+        bool erase(const K &key)
         {
+            if (_root == nullptr)
+                return false;
 
             Node *parent = nullptr;
             Node *cur = _root;
 
             while (cur)
             {
-                if (cur->_key < val)
-                {
-                    parent = cur;
-                    cur = cur->_right;
-                }
-                else if (cur->_key > val)
+                if (key < cur->_key)
                 {
                     parent = cur;
                     cur = cur->_left;
                 }
-                else // cur->_key == val
+                else if (key > cur->_key)
                 {
-                    // 刪除目標
+                    parent = cur;
+                    cur = cur->_right;
+                }
+                else
+                {
+                    // case 1: 無左子
                     if (cur->_left == nullptr)
                     {
                         if (parent == nullptr)
-                        { // 父節點為空 => root
                             _root = cur->_right;
-                        }
+                        else if (parent->_left == cur)
+                            parent->_left = cur->_right;
                         else
-                        {
-                            if (parent->_left == cur)
-                            {
-                                parent->_left = cur->_right;
-                            }
-                            else
-                            {
-                                parent->_right = cur->_right;
-                            }
-                        }
+                            parent->_right = cur->_right;
+
                         delete cur;
                         return true;
                     }
+                    // case 2: 無右子
                     else if (cur->_right == nullptr)
                     {
                         if (parent == nullptr)
-                        {
                             _root = cur->_left;
-                        }
+                        else if (parent->_left == cur)
+                            parent->_left = cur->_left;
                         else
-                        {
-                            if (parent->_left == cur)
-                            {
-                                parent->_left = cur->_left;
-                            }
-                            else
-                            {
-                                parent->_right = cur->_left;
-                            }
-                        }
+                            parent->_right = cur->_left;
+
                         delete cur;
                         return true;
                     }
+                    // case 3: 有左右子
                     else
                     {
-                        // 有兩個孩子的情況 => 可以選擇左子樹最大的值或右子樹最小的值 ( 為了滿足BST 左小右大的性質 )
-                        Node *RightMinP = cur;        // 當前最小的 val 的父節點
-                        Node *RightMin = cur->_right; // 找右子樹最小的 val
+                        Node *RightMinP = cur;
+                        Node *RightMin = cur->_right;
                         while (RightMin->_left)
-                        { // 右子樹最小的肯定是在 cur->_right 這個節點的左子樹中
+                        {
                             RightMinP = RightMin;
                             RightMin = RightMin->_left;
                         }
-                        cur->_key = RightMin->_key; // 將最小的值給 cur (要刪除的位置) => 交換法
 
-                        if (RightMinP->_left == RightMin) // 判斷RightMin 是RightMinP的左子還是右子
-                        {
-                            RightMinP->_left = RightMin->_left;
-                        }
+                        cur->_key = RightMin->_key;
+                        cur->_val = RightMin->_val;
+
+                        if (RightMinP->_left == RightMin)
+                            RightMinP->_left = RightMin->_right;
                         else
-                        {
                             RightMinP->_right = RightMin->_right;
-                        }
-                        delete RightMin; // 刪除節點
+
+                        delete RightMin;
                         return true;
                     }
                 }
             }
 
-            return false;
+            return false; // key 不存在
         }
 
         void InOrder()
@@ -418,13 +388,35 @@ namespace BST_K_V
         void _InOrder(Node *root)
         {
             if (root == nullptr)
-            {
                 return;
-            }
+
             _InOrder(root->_left);
-            cout << root->_key << ":" << root->_value << endl;
+            cout << root->_key << ":" << root->_val << " ";
             _InOrder(root->_right);
         }
-        Node *_root = nullptr;
+
+        Node *Copy(Node *root)
+        {
+            if (root == nullptr)
+                return nullptr;
+
+            Node *newRoot = new Node(root->_key, root->_val);
+            newRoot->_left = Copy(root->_left);
+            newRoot->_right = Copy(root->_right); // 修正此行錯字
+            return newRoot;
+        }
+
+        void Destroy(Node *root)
+        {
+            if (root == nullptr)
+                return;
+
+            Destroy(root->_left);
+            Destroy(root->_right);
+            delete root;
+        }
+
+    private:
+        Node *_root;
     };
 }
