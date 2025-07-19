@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug test.cpp",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/test",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "Build test.cpp"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/milkyway1012/Documents/github/Code/CPP/RBT",
+      "program": "/Users/milkyway1012/Documents/github/Code/CPP/RBT/build/Debug/outDebug"
+    }
+  ]
+}
