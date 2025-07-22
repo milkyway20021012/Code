@@ -159,20 +159,20 @@ private:
     /*
     右旋的目標：
     1. 將parent的左子節點subL提升為新的根節點
-    2. 將subL的右子節點subLR掛接到parent的左子節點位置
-    3. 將parent掛接到subL的右子節點位置
+    2. 將subL的右子節點subLR接到parent的左子節點位置
+    3. 將parent接到subL的右子節點位置
     4. 更新所有相關的父節點指針，維護樹的完整性
     */
     Node *subL = parent->_left; // 獲取左子節點（將成為新的根節點）
-    Node *subLR = subL->_right; // 獲取左子節點的右子節點（需要重新掛接）
+    Node *subLR = subL->_right; // 獲取左子節點的右子節點（需要重新接）
 
-    // 步驟1：將subLR掛接到parent的左子節點位置
+    // 步驟1：將subLR接到parent的左子節點位置
     parent->_left = subLR;
     if (subLR) {
       subLR->_parent = parent; // 更新subLR的父節點指針
     }
 
-    // 步驟2：將parent掛接到subL的右子節點位置
+    // 步驟2：將parent接到subL的右子節點位置
     subL->_right = parent;
 
     // 步驟3：更新祖父節點的指向關係
@@ -203,31 +203,22 @@ private:
   // 參數：parent - 需要進行左旋的節點
   void RotateL(Node *parent) {
     /*
-    左旋調整原理圖解：
-
-    旋轉前：       旋轉後：
-    parent           subR
-       \            /    \
-        subR  =>  parent  ...
-       /    \        \
-      ...   subRL    subRL
-
     左旋的目標：
     1. 將parent的右子節點subR提升為新的根節點
-    2. 將subR的左子節點subRL掛接到parent的右子節點位置
-    3. 將parent掛接到subR的左子節點位置
+    2. 將subR的左子節點subRL接到parent的右子節點位置
+    3. 將parent接到subR的左子節點位置
     4. 更新所有相關的父節點指針，維護樹的完整性
     */
     Node *subR = parent->_right; // 獲取右子節點（將成為新的根節點）
-    Node *subRL = subR->_left;   // 獲取右子節點的左子節點（需要重新掛接）
+    Node *subRL = subR->_left;   // 獲取右子節點的左子節點（需要重新接）
 
-    // 步驟1：將subRL掛接到parent的右子節點位置
+    // 步驟1：將subRL接到parent的右子節點位置
     parent->_right = subRL;
     if (subRL) {
       subRL->_parent = parent; // 更新subRL的父節點指針
     }
 
-    // 步驟2：將parent掛接到subR的左子節點位置
+    // 步驟2：將parent接到subR的左子節點位置
     subR->_left = parent;
 
     // 步驟3：更新祖父節點的指向關係
@@ -260,17 +251,6 @@ private:
   // 參數：parent - 需要進行左右旋的節點
   void RotateLR(Node *parent) {
     /*
-    左右旋調整原理圖解：
-
-    旋轉前：       第一次左旋：     第二次右旋：
-    parent         parent           subLR
-       /              /            /    \
-      subL           subLR    =>  subL   parent
-       \            /    \         \       \
-        subLR      subL   ...      ...     ...
-       /    \        \
-      ...   ...      ...
-
     左右旋的目標：
     1. 先對parent的左子節點subL進行左旋，將左右情況轉換為左左情況
     2. 再對parent進行右旋，恢復平衡
