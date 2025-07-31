@@ -53,7 +53,7 @@ public:
     // 后置--
     Date operator--(int);
     // d1 - d2
-    Date operator-(const Date &d) const;
+    int operator-(const Date &d) const;
 
 private:
     int _year;

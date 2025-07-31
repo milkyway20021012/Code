@@ -131,7 +131,7 @@ Date Date::operator-(int day) const
     tmp -= day;
     return tmp;
 }
-Date Date::operator-(const Date &d) const
+int Date::operator-(const Date &d) const
 {
     // 两个日期要相减，要先考虑哪一个人日期比较大
     Date max = *this;

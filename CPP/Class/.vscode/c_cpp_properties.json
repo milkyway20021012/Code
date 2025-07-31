@@ -5,11 +5,13 @@
       "includePath": [
         "${workspaceFolder}/**"
       ],
-      "defines": [],
+      "compilerPath": "/usr/bin/clang",
       "cStandard": "${default}",
       "cppStandard": "${default}",
       "intelliSenseMode": "macos-clang-arm64",
-      "compilerPath": "/usr/bin/clang"
+      "compilerArgs": [
+        ""
+      ]
     }
   ],
   "version": 4
