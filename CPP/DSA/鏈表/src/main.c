@@ -1,0 +1,88 @@
+#include "../include/slist.h"
+
+int main() {
+  // SL *sl = NULL;
+  // SLPush_Back(&sl, 1);
+  // SLPush_Back(&sl, 2);
+  // SLPush_Back(&sl, 3);
+  // SLPush_Back(&sl, 4);
+  // SLPush_Back(&sl, 5);
+  // SLPush_Back(&sl, 6);
+  // SLPush_Back(&sl, 7);
+  // SLPush_Back(&sl, 8);
+  // SLPush_Back(&sl, 9);
+  // SLPush_Back(&sl, 10);
+  // SLPrint(sl);
+  // SListDestroy(&sl);
+  // SLPrint(sl);
+
+  SL *sl = LTInit();
+  LTPushBack(sl, 1);
+  LTPushBack(sl, 2);
+  LTPushBack(sl, 3);
+  LTPushBack(sl, 4);
+  LTPushBack(sl, 5);
+  LTPushBack(sl, 6);
+  LTPushBack(sl, 7);
+  LTPushBack(sl, 8);
+  LTPushBack(sl, 9);
+  LTPushBack(sl, 10);
+  // LTPrint(sl);
+  // LTPopBack(sl);
+  // LTPopBack(sl);
+  // LTPopBack(sl);
+  // LTPopBack(sl);
+  // LTPopBack(sl);
+  // LTPopBack(sl);
+  // LTPopBack(sl);
+  // LTPopBack(sl);
+  // LTPopBack(sl);
+  // LTPopBack(sl);
+  // LTPrint(sl);
+
+  // LTPushFront(sl, 10);
+  // LTPushFront(sl, 9);
+  // LTPushFront(sl, 8);
+  // LTPushFront(sl, 7);
+  // LTPushFront(sl, 6);
+  // LTPushFront(sl, 5);
+  // LTPushFront(sl, 4);
+  // LTPushFront(sl, 3);
+  // LTPushFront(sl, 2);
+  // LTPushFront(sl, 1);
+  // LTPrint(sl);
+  // // LTPopFront(sl);
+  // // LTPopFront(sl);
+  // // LTPopFront(sl);
+  // // LTPopFront(sl);
+  // // LTPopFront(sl);
+  // // LTPopFront(sl);
+  // // LTPopFront(sl);
+  // // LTPopFront(sl);
+  // // LTPopFront(sl);
+  // // LTPopFront(sl);
+  // // LTPopFront(sl);
+  // // LTPrint(sl);
+  // LTInsert(sl, 1);
+  // LTInsert(sl, 2);
+  // LTInsert(sl, 3);
+  // LTInsert(sl, 4);
+  // LTInsert(sl, 5);
+  // LTInsert(sl, 6);
+  // LTInsert(sl, 7);
+  // LTPrint(sl);
+  // LTErase(sl);
+  // LTErase(sl);
+  // LTErase(sl);
+  // LTErase(sl);
+  // LTErase(sl);
+  // LTErase(sl);
+  // LTErase(sl);
+  // LTErase(sl);
+  // LTPrint(sl);
+
+  // LTFind(sl, 5);
+  LTDestroy(sl);
+  LTPrint(sl);
+  return 0;
+}
