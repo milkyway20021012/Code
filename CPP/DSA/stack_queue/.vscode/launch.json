@@ -1,0 +1,26 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "(lldb) Launch app",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/bin/app",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "lldb",
+      "preLaunchTask": "Build (Make debug)"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/milkyway1012/Documents/github/Code/CPP/DSA/棧和佇列/src",
+      "program": "/Users/milkyway1012/Documents/github/Code/CPP/DSA/棧和佇列/src/build/Debug/outDebug"
+    }
+  ]
+}

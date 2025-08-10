@@ -330,5 +330,7 @@ int main() {
   // weak_ptr不⽀持管理资源，不⽀持RAII
   // weak_ptr是专⻔绑定shared_ptr，不增加他的引⽤计数，作为⼀些场景的辅助管理
   // std::weak_ptr<ListNode> wp(new ListNode);
+
+  std::shared_ptr<int> _n4(new int[3]);
   return 0;
 }
