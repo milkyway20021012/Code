@@ -13,6 +13,14 @@
       "externalConsole": false,
       "MIMode": "lldb",
       "preLaunchTask": "make: debug"
+    },
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "lldb",
+      "request": "launch",
+      "args": [],
+      "cwd": "/Users/milkyway1012/Documents/github/Code/CPP/DSA/heap_binary_tree/src",
+      "program": "/Users/milkyway1012/Documents/github/Code/CPP/DSA/heap_binary_tree/src/build/Debug/outDebug"
     }
   ]
 }
